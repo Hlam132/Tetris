@@ -344,7 +344,7 @@ def difficulty():
 
         sound_button = Button(500, 50)
         sound_button.draw_b(150, 170, action=fs_medium)
-        print_text('Normal', 50, (255, 255, 255), 355, 180)
+        print_text('Normal', 50, (255, 255, 255), 330, 180)
 
         sound_button = Button(500, 50)
         sound_button.draw_b(150, 230, action=fs_minus)
