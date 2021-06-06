@@ -304,19 +304,25 @@ def draw_next_shape(shape, surface):
     surface.blit(label, (sx + 10, sy - 30))
 
 
-def fs_reset():
+def fs_medium():
     global fs
     fs = 0.27
+    main()
+    pygame.display.update()
 
 
 def fs_minus():
     global fs
     fs = 0.40
+    main()
+    pygame.display.update()
 
 
 def fs_plus():
     global fs
     fs = 0.15
+    main()
+    pygame.display.update()
 
 
 def sound_off():
@@ -325,6 +331,35 @@ def sound_off():
 
 def sound_on():
     pygame.mixer.music.set_volume(0.5)
+
+
+def difficulty():
+    pygame.display.update()
+    run = True
+    while run:
+        win.blit(background, (0, 0))
+        sound_button = Button(500, 50)
+        sound_button.draw_b(150, 110, action=fs_plus)
+        print_text('Hard', 50, (255, 255, 255), 355, 120)
+
+        sound_button = Button(500, 50)
+        sound_button.draw_b(150, 170, action=fs_medium)
+        print_text('Normal', 50, (255, 255, 255), 355, 180)
+
+        sound_button = Button(500, 50)
+        sound_button.draw_b(150, 230, action=fs_minus)
+        print_text('Easy', 50, (255, 255, 255), 355, 240)
+
+        start_button = Button(500, 50)
+        start_button.draw_b(150, 490, action=main_menu)
+        print_text('Quit', 50, (255, 255, 255), 355, 500)
+
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            else:
+                None
 
 
 def draw_window(surface):
@@ -344,24 +379,16 @@ def draw_window(surface):
     pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5)
 
     sound_button = Button(80, 20)
-    sound_button.draw_b(8, 510, action=fs_plus)
-    print_text('FS +', 20, (255, 255, 255), 35, 515)
+    sound_button.draw_b(8, 606, action=sound_on)
+    print_text('Music on', 20, (255, 255, 255), 12, 610)
 
     sound_button = Button(80, 20)
-    sound_button.draw_b(8, 540, action=fs_reset)
-    print_text('FS res', 20, (255, 255, 255), 25, 545)
+    sound_button.draw_b(8, 636, action=sound_off)
+    print_text('Music off', 20, (255, 255, 255), 12, 640)
 
-    sound_button = Button(80, 20)
-    sound_button.draw_b(8, 570, action=fs_minus)
-    print_text('FS -', 20, (255, 255, 255), 35, 575)
-
-    sound_button = Button(80, 20)
-    sound_button.draw_b(8, 636, action=sound_on)
-    print_text('Music on', 20, (255, 255, 255), 12, 640)
-
-    sound_button = Button(80, 20)
-    sound_button.draw_b(8, 666, action=sound_off)
-    print_text('Music off', 20, (255, 255, 255), 12, 670)
+    start_button = Button(80, 20)
+    start_button.draw_b(8, 666, action=main_menu)
+    print_text('Quit', 20, (255, 255, 255), 12, 670)
 
 
 def main():
@@ -381,7 +408,6 @@ def main():
     fall_time = 0
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.5)
-    fs = 0.27
 
     while run:
 
@@ -469,11 +495,12 @@ def main():
 
 
 def main_menu():
+    pygame.mixer.music.stop()
     run = True
     while run:
         win.blit(background, (0, 0))
         start_button = Button(500, 50)
-        start_button.draw_b(150, 300, action=main)
+        start_button.draw_b(150, 300, action=difficulty)
         print_text('Play', 50, (255, 255, 255), 355, 305)
         start_button = Button(500, 50)
         start_button.draw_b(150, 400, action=quit)
